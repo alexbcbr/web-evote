@@ -1,0 +1,113 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "Aplicacao de evote",
+
+  "Parameters" : {
+
+    "InstanceTypeParameter" : {
+      "Type" : "String",
+      "Default" : "t2.small",
+      "AllowedValues" : ["t2.small", "t2.medium"],
+      "Description" : "Selecione o tamanho da sua instancia"
+    },
+
+    "SecurityGroupIds" : {
+      "Description": "Choose your security Group",
+      "Type": "List<AWS::EC2::SecurityGroup::Id>",
+      "ConstraintDescription": "Selecione o seu security group"
+    },
+
+    "VpcId" : {
+      "Type": "AWS::EC2::VPC::Id",
+      "Description": "Vpc id"
+    },
+
+    "SubnetId" : {
+      "Type": "AWS::EC2::Subnet::Id",
+      "Description": "Subnet id"
+    },
+
+    "KeyPairName" : {
+      "Description" : "KeyPair for SSH access",
+      "Type" : "AWS::EC2::KeyPair::KeyName"
+    }
+
+
+  },
+
+
+  "Mappings" : {
+    "RegionMap" : {
+      "us-east-1" : {
+          "AMI" : "ami-0947d2ba12ee1ff75"
+      },
+      "sa-east-1" : {
+          "AMI" : "ami-013dd6e24f90aa93f"
+      }
+    }
+  },
+
+  "Resources" : {
+    "IPAddress" : {
+      "Type" : "AWS::EC2::EIP"
+    },
+
+    "IPAssoc" : {
+      "Type" : "AWS::EC2::EIPAssociation",
+      "Properties" : {
+        "InstanceId" : { "Ref" : "Ec2Instance" },
+        "EIP" : { "Ref" : "IPAddress" }
+      }
+    },
+
+    "Ec2Instance" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "ImageId" : { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "AMI" ]},
+        "InstanceType" : { "Ref" : "InstanceTypeParameter" },
+        "SecurityGroupIds" : { "Ref" : "SecurityGroupIds" },
+        "KeyName" : { "Ref" : "KeyPairName" },
+        "SubnetId" : { "Ref" : "SubnetId" },
+        "Monitoring" : "true",
+        "Tags": [
+          { "Key" : "Name", "Value": "evote-web" },
+          { "Key" : "Environment", "Value" : "Development" },
+          { "Key" : "Department", "Value" : "Public Website" },
+          { "Key" : "Platform", "Value" : "VUE" },
+          { "Key" : "System", "Value" : "Public Interface" }
+        ],
+        "UserData": {
+              "Fn::Base64": {
+                  "Fn::Join": [
+                      "",
+                      [
+                          "#!/bin/bash\n",
+                          "# Atualizar seguranca antes do CfnInit\n",
+                          "# yum update -y --security\n",
+                          "yum install -y httpd mysql\n",
+                          "systemctl start httpd\n",
+                          "wget https://s3.amazonaws.com/alexbc.demoapp/evote-web.zip\n",
+                          "mv evote-web.zip /var/www/html\n",
+                          "cd /var/www/html\n",
+                          "unzip evote-web.zip\n",
+                          "chown -R ec2-user:apache /var/www/html\n",
+                          "chmod -R 2775 /var/www/html"
+                      ]
+                  ]
+              }
+          }
+      }
+    }
+  },
+
+  "Outputs" : {
+    "InstanceId" : {
+      "Description" : "InstanceId alocado",
+      "Value" : { "Ref" : "Ec2Instance" }
+    },
+    "PublicIP" : {
+      "Description" : "IP",
+      "Value" : { "Fn::GetAtt" : [ "Ec2Instance", "PublicIp" ] }
+    }
+  }
+}
