@@ -1,6 +1,10 @@
 
 # Welcome to eVote Demo using CDK
 
+install constructs
+python -m pip install aws-cdk.aws-s3 aws-cdk.aws-lambda aws-cdk.aws-cognito aws-cdk.aws-sns aws-cdk.aws-sns-subscription
+https://docs.aws.amazon.com/cdk/latest/guide/work-with-cdk-python.html
+
 At this point you can now synthesize the CloudFormation template for this code.
 
 ```bash
