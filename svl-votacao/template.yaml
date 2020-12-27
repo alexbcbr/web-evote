@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  svl-votacao
+
+Globals:
+  Function:
+    Timeout: 3
+    Runtime: python3.8
+    Tracing: Active
+
+Resources:
+  CastVoteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: cast_vote/
+      Handler: app.handler
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            Path: /vote
+            Method: get
+
+Outputs:
+  CastVoteApi:
+    Description: "API Gateway endpoint URL for Prod stage for the function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  CastVoteFunction:
+    Description: "Function ARN"
+    Value: !GetAtt CastVoteFunction.Arn
+  CastVoteFunctionIamRole:
+    Description: "Implicit IAM Role created for the function"
+    Value: !GetAtt CastVoteFunctionRole.Arn

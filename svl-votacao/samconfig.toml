@@ -1,0 +1,19 @@
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+stack_name = "svl-votacao"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-av0aupym3r1f"
+s3_prefix = "svl-votacao"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "svl-votacao"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-av0aupym3r1f"
+s3_prefix = "svl-votacao"
+region = "us-east-1"
+capabilities = "CAPABILITY_IAM"
