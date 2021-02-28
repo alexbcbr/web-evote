@@ -21,6 +21,32 @@ Resources:
           Properties:
             Path: /vote
             Method: get
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: 
+              Ref: ElectionsRecordTable
+  
+  ElectionsRecordTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName:
+        'Fn::Sub': 'EleicoesPresidente'
+      AttributeDefinitions:
+        - AttributeName: eleitor
+          AttributeType: S
+        - AttributeName: candidato
+          AttributeType: S
+      KeySchema:
+        - AttributeName: eleitor
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      GlobalSecondaryIndexes:
+        - IndexName: candidato
+          KeySchema:
+            - AttributeName: candidato
+              KeyType: HASH
+          Projection:
+            ProjectionType: ALL
 
 Outputs:
   CastVoteApi:
