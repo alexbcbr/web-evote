@@ -6,6 +6,6 @@ codeuri = "cast_vote/"
 runtime = "python3.8"
 source_md5 = ""
 packagetype = "Zip"
-functions = ["CastVoteFunction"]
+functions = ["VotarFunction"]
 
 [layer_build_definitions]

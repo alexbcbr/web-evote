@@ -10,7 +10,12 @@ Globals:
     Tracing: Active
 
 Resources:
-  CastVoteFunction:
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+
+  VotarFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: cast_vote/
@@ -21,12 +26,15 @@ Resources:
           Properties:
             Path: /vote
             Method: get
+            RestApiId:
+              Ref: ApiGateway
       Policies:
         - DynamoDBWritePolicy:
             TableName: 
-              Ref: ElectionsRecordTable
-  
-  ElectionsRecordTable:
+              Ref: EleicoesTable
+
+
+  EleicoesTable:
     Type: 'AWS::DynamoDB::Table'
     Properties:
       TableName:
@@ -50,11 +58,5 @@ Resources:
 
 Outputs:
   CastVoteApi:
-    Description: "API Gateway endpoint URL for Prod stage for the function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
-  CastVoteFunction:
-    Description: "Function ARN"
-    Value: !GetAtt CastVoteFunction.Arn
-  CastVoteFunctionIamRole:
-    Description: "Implicit IAM Role created for the function"
-    Value: !GetAtt CastVoteFunctionRole.Arn
+    Description: "API Gateway endpoint URL para votacao"
+    Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/vote/"
