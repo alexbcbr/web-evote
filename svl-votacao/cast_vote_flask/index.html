@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+<script>
+ var jsonfile ={{ jsonfile|tojson }};
+ var obj = JSON.parse(jsonfile);;
+ document.getElementById("demo").innerHTML = obj;
+</script>
+</body>
+</html>
