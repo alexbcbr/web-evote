@@ -6,27 +6,24 @@
     <div class="container">
       <div class="row">
         <div class="span3">
-          <img src="../assets/candidate1.jpg" width="100" height="100" alt="" class="img-polaroid" />
+          <a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/erro">
+            <img src="../assets/candidate1.jpg" width="100" height="100" alt="" class="img-polaroid" />
+          </a>
           <div class="roles">
-            <h5><strong>Antonio Dutra</strong></h5>
-            <input type="radio" name="candidate">
-            <p>
-              Partido de Direita
-            </p>
+            <h5><strong><a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/23">Antonio Lambda Serverless</a></strong></h5>
+          </div>
+        </div>
+        <div class="span3">
+          <img src="../assets/candidate3.jpg" width="100" height="100" alt="" class="img-polaroid" />
+          <div class="roles">
+            <h5><strong><a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/11">Maria Kubernetes</a></strong></h5>
           </div>
         </div>
         <div class="span3">
           <img src="../assets/candidate2.jpg" width="100" height="100" alt="" class="img-polaroid" />
           <div class="roles">
-            <h5><strong>Joao da Silva</strong></h5>
-            <input type="radio" name="candidate">
-            <p>
-              Partido de Esquerda
-            </p>
+            <h5><strong><a href="http://0.0.0.0:5000">Joao Flask Datacenter</a></strong></h5>
           </div>
-        </div>
-        <div class="span3">
-          <input type="submit" value="Selecione o seu candidato">
         </div>
       </div>
     </div>

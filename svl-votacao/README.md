@@ -7,7 +7,8 @@
 sam build
 sam deploy --guided
 
-curl https://wmq21dm5gb.execute-api.us-east-1.amazonaws.com/Prod/vote
+curl https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/114
+
 sam logs -n VotarFunction --stack-name svl-votacao --tail
 
 aws cloudformation delete-stack --stack-name svl-votacao

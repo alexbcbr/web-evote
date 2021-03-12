@@ -1,6 +1,4 @@
-#import os
 import json
-#from flask import Flask, render_template, abort, url_for, json, jsonify
 from flask import Flask, render_template, json
 
 import boto3
@@ -25,7 +23,7 @@ def index():
     eleitor=get_eleitor_code()
     put_voto(eleitor, "83")
     logging.info("** Eleitor:" + eleitor)
-    data = '{ "message":%s}' % (eleitor)
+    data = '{ "eleitor":%s}' % (eleitor)
 
     return render_template('index.html', jsonfile=json.dumps(data))
 

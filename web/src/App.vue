@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Candidate msg="Eleições Presidenciais 2020"/>
+    <Candidate msg="Eleições Presidenciais 2021"/>
   </div>
 </template>
 

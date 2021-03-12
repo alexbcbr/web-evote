@@ -1,1 +1,1 @@
-./xray_mac -o -n us-east-1
+./xray_mac -o -n us-west-2

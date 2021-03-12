@@ -8,12 +8,19 @@ Globals:
     Timeout: 3
     Runtime: python3.8
     Tracing: Active
+    Environment:
+      Variables:
+        TRACE_LEVEL: INFO
 
 Resources:
+  SQSQueueLegacyVoting:
+    Type: AWS::SQS::Queue
+
   ApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
+      TracingEnabled: true
 
   VotarFunction:
     Type: AWS::Serverless::Function
@@ -24,7 +31,7 @@ Resources:
         HelloWorld:
           Type: Api
           Properties:
-            Path: /vote
+            Path: /vote/{num_candidato}
             Method: get
             RestApiId:
               Ref: ApiGateway
@@ -32,7 +39,12 @@ Resources:
         - DynamoDBWritePolicy:
             TableName: 
               Ref: EleicoesTable
-
+        - SQSSendMessagePolicy:
+            QueueName:
+              'Fn::GetAtt': SQSQueueLegacyVoting.QueueName
+      Environment:
+        Variables:
+          SQS_QUEUE_URL: !Ref SQSQueueLegacyVoting
 
   EleicoesTable:
     Type: 'AWS::DynamoDB::Table'
@@ -60,3 +72,7 @@ Outputs:
   CastVoteApi:
     Description: "API Gateway endpoint URL para votacao"
     Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/vote/"
+
+  SQSQueue:
+    Description: "SQS Queue to publish vote"
+    Value: !Ref SQSQueueLegacyVoting
