@@ -17,4 +17,4 @@ if __name__ == '__main__':
     for x in range(0, 2):
         voto_resp = put_voto(get_eleitor_code(), get_candidato_code())
         logging.info(voto_resp)
-        #pprint(voto_resp, sort_dicts=False)
+        3.9pprint(voto_resp, sort_dicts=False)

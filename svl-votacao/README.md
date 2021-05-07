@@ -1,13 +1,11 @@
 # svl-votacao
-# SVL - Service based on Lambda
-# SVC - Service based on container
-# SVS - Service based on server (EC2)
 
 ```bash
+## if python has error you can change ln -sf /usr/local/opt/python@3.8/bin/python3.8 /usr/local/bin/
 sam build
 sam deploy --guided
 
-curl https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/114
+curl https://zllyb3t6xj.execute-api.us-west-2.amazonaws.com/prod/vote/114
 
 sam logs -n VotarFunction --stack-name svl-votacao --tail
 

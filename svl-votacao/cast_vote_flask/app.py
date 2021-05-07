@@ -9,7 +9,10 @@ import sys
 sys.path.insert(1, '../cast_vote')
 from voto_registro import *
 
+#from prometheus_flask_exporter import PrometheusMetrics
+
 app = Flask(__name__,template_folder='.')
+#metrics = PrometheusMetrics(app)
 
 xray_recorder.configure(service='cast_vote_flask')
 XRayMiddleware(app, xray_recorder)
@@ -23,7 +26,7 @@ def index():
     eleitor=get_eleitor_code()
     put_voto(eleitor, "83")
     logging.info("** Eleitor:" + eleitor)
-    data = '{ "eleitor":%s}' % (eleitor)
+    data = '{ "eleitor-k":%s}' % (eleitor)
 
     return render_template('index.html', jsonfile=json.dumps(data))
 

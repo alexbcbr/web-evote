@@ -16,7 +16,7 @@
         <div class="span3">
           <img src="../assets/candidate3.jpg" width="100" height="100" alt="" class="img-polaroid" />
           <div class="roles">
-            <h5><strong><a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/11">Maria Kubernetes</a></strong></h5>
+            <h5><strong><a href="http://ade216c9985f5488994cbb7640ff6408-1534951203.us-west-2.elb.amazonaws.com:5000">Maria Kubernetes</a></strong></h5>
           </div>
         </div>
         <div class="span3">

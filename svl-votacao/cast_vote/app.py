@@ -14,7 +14,6 @@ sqs_queue_url = os.environ['SQS_QUEUE_URL']
 def handler(event, context):
 
     logging.getLogger().setLevel(trace_level)
-    #logger.info('## ENVIRONMENT VARIABLES\r' + jsonpickle.encode(dict(**os.environ)))
 
     eleitor=get_eleitor_code()
     candidato=check_candidato_code(event['pathParameters']['num_candidato'])

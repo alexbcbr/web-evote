@@ -4,7 +4,7 @@ import logging
 
 def put_voto(eleitor, candidato):
     logging.info("** Novo Voto incluido **")
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = boto3.resource('dynamodb',  region_name="us-west-2")
     table = dynamodb.Table('EleicoesPresidente')
     response = table.put_item(
        Item={
@@ -15,15 +15,14 @@ def put_voto(eleitor, candidato):
     return response
 
 def send_message_voto(queue, candidato):
-    #sqs_client = boto3.client("sqs", region_name="us-west-2")
+    sqs_client = boto3.client("sqs", region_name="us-west-2")
     logging.info("** Voto enviado para o legado **")
-    sqs_client = boto3.client("sqs")
+    #sqs_client = boto3.client("sqs")
 
     response = sqs_client.send_message(
         QueueUrl=queue,
         MessageBody=candidato
     )
-
 
 def get_eleitor_code():
     logging.info("** Obtido codigo do Eleitor **")
