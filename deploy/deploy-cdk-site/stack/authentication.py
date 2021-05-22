@@ -1,6 +1,6 @@
 from aws_cdk import (
     aws_iam as iam,
-    aws_cognito as cognito,
+    #aws_cognito as cognito,
     core
 )
 

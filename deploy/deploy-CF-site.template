@@ -48,6 +48,24 @@
   },
 
   "Resources" : {
+
+    "ElectionsRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+         "AssumeRolePolicyDocument": {
+            "Version" : "2012-10-17",
+            "Statement": [ {
+               "Effect": "Allow",
+               "Principal": {
+                  "Service": [ "ec2.amazonaws.com" ]
+               },
+               "Action": [ "sts:AssumeRole" ]
+            } ]
+         },
+         "Path": "/"
+      }
+   },
+
     "IPAddress" : {
       "Type" : "AWS::EC2::EIP"
     },
@@ -86,7 +104,7 @@
                           "# yum update -y --security\n",
                           "yum install -y httpd mysql\n",
                           "systemctl start httpd\n",
-                          "wget https://s3.amazonaws.com/alexbc.demoapp/evote-web.zip\n",
+                          "#aws s3 cp s3://alexbc.demoapp/evote-web.zip\n",
                           "mv evote-web.zip /var/www/html\n",
                           "cd /var/www/html\n",
                           "unzip evote-web.zip\n",

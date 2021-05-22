@@ -5,7 +5,8 @@ from aws_cdk.aws_s3_assets import Asset
 from aws_cdk import (
     aws_ec2 as ec2,
     aws_iam as iam,
-    core,
+    #aws_elasticloadbalancing as elb,
+    core
 )
 
 dirname = os.path.dirname(__file__)
@@ -32,6 +33,7 @@ class DeployWebStack(core.Stack):
         # Instance Role and SSM Managed Policy
         role = iam.Role(self, "InstanceSSM", assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
         role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("service-role/AmazonEC2RoleforSSM"))
+        role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("AmazonS3FullAccess"))
 
         mws_vpc_sg = ec2.SecurityGroup(self, "MerchWebServicesSecurityGroup",
             description= "Allow ssh access to ec2 instances",
@@ -43,13 +45,15 @@ class DeployWebStack(core.Stack):
         mws_vpc_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(22), "allow ssh access from the world")
         mws_vpc_sg.add_ingress_rule(ec2.Peer.any_ipv4(), ec2.Port.tcp(80), "allow http access")
 
+
         # Instance
         instance = ec2.Instance(self, "Instance",
             instance_type=ec2.InstanceType("t2.micro"),
             machine_image=amzn_linux,
             vpc = vpc,
             role = role,
-            security_group = mws_vpc_sg
+            security_group = mws_vpc_sg,
+            
         )
 
         # Script in S3 as Asset
@@ -65,3 +69,18 @@ class DeployWebStack(core.Stack):
         )
         asset.grant_read(instance.role)
 
+        ### Load Balancer
+        '''
+        lb = elb.LoadBalancer(self, "LB",
+            vpc=vpc,
+            internet_facing=True,
+            health_check={
+                "port": 80
+            }
+        )
+
+        lb.add_listener(
+            external_port=80,
+            allow_connections_from=mws_vpc_sg
+        )
+        '''

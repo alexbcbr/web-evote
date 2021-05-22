@@ -1,6 +1,5 @@
 import setuptools
 
-
 with open("README.md") as fp:
     long_description = fp.read()
 
@@ -25,6 +24,7 @@ setuptools.setup(
         "aws-cdk.aws_sns==1.66.0",
         "aws-cdk.aws_sns_subscriptions==1.66.0",
         "aws-cdk.aws_s3==1.66.0",
+        "aws-cdk.aws_elasticloadbalancing=1.66.0"
     ],
 
     python_requires=">=3.6",
