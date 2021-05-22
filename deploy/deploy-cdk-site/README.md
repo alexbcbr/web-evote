@@ -1,5 +1,4 @@
-
-# eVote Demo using CDK
+# eVote Demo using CDK para TDC
 
 ## CDK install requirements
 * node
