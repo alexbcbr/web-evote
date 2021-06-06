@@ -8,6 +8,12 @@ npm install -g npm
 npm install -g aws-cdk
 ###############
 
+## Test with Jmeter
+brew install jmeter
+open /usr/local/bin/jmeter
+###
+
+
 install constructs
 python -m pip install aws-cdk.aws-s3 aws-cdk.aws-lambda aws-cdk.aws-cognito aws-cdk.aws-sns aws-cdk.aws-sns aws-cdk.aws-elasticloadbalancing
 

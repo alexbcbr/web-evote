@@ -1,0 +1,26 @@
+---
+schemaVersion: "2.2"
+description: "Instalar java e rodar teste de chaos engineering para erro em threads"
+parameters:
+  Message:
+    type: "String"
+    description: "Example"
+    default: "Hello World"
+mainSteps:
+- name: "java"
+  action: "aws:runShellScript"
+  inputs:
+    runCommand:
+    - "yum install -y java"
+    
+- name: "download_app"
+  action: "aws:runShellScript"
+  inputs:
+    runCommand:
+    - "aws s3 cp s3://alexbc.demoapp/ThreadLeak.jar ."
+    
+- name: "run_threadleak_app" 
+  action: "aws:runShellScript"
+  inputs:
+    runCommand:
+    - "java -classpath ThreadLeak.jar com.chaosengineering.thread.ThreadLeakDemo"

@@ -1,10 +1,19 @@
+from os import name
 import random
 import boto3
 import logging 
 
+def get_trace_level():
+    ssm = boto3.client('ssm')
+    trace_level = ssm.get_parameter(
+        Name='tracelevel',WithDecryption=False
+    )
+    return trace_level['Parameter']['Value']
+
 def put_voto(eleitor, candidato):
     logging.info("** Novo Voto incluido **")
-    dynamodb = boto3.resource('dynamodb',  region_name="us-west-2")
+    #dynamodb = boto3.resource('dynamodb',  region_name="us-west-2")
+    dynamodb = boto3.resource('dynamodb')
     table = dynamodb.Table('EleicoesPresidente')
     response = table.put_item(
        Item={
@@ -15,7 +24,8 @@ def put_voto(eleitor, candidato):
     return response
 
 def send_message_voto(queue, candidato):
-    sqs_client = boto3.client("sqs", region_name="us-west-2")
+    #sqs_client = boto3.client("sqs", region_name="us-west-2")
+    sqs_client = boto3.client("sqs")
     logging.info("** Voto enviado para o legado **")
     #sqs_client = boto3.client("sqs")
 

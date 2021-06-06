@@ -6,23 +6,23 @@
     <div class="container">
       <div class="row">
         <div class="span3">
-          <a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/erro">
+          <!--a href="https://apieleicoes.abcgov.com.br/vote/erro"-->
             <img src="../assets/candidate1.jpg" width="100" height="100" alt="" class="img-polaroid" />
-          </a>
+          <!--/a-->
           <div class="roles">
-            <h5><strong><a href="https://bmh4edak9b.execute-api.us-west-2.amazonaws.com/prod/vote/23">Antonio Lambda Serverless</a></strong></h5>
+            <h5><strong><a href="https://apieleicoes.abcgov.com.br/vote/23">Antonio Lambda Serverless</a></strong></h5>
           </div>
         </div>
         <div class="span3">
           <img src="../assets/candidate3.jpg" width="100" height="100" alt="" class="img-polaroid" />
           <div class="roles">
-            <h5><strong><a href="http://ade216c9985f5488994cbb7640ff6408-1534951203.us-west-2.elb.amazonaws.com:5000">Maria Kubernetes</a></strong></h5>
+            <h5><strong><a href="https://apieleicoes.abcgov.com.br/vote/31">Maria Kubernetes</a></strong></h5>
           </div>
         </div>
         <div class="span3">
           <img src="../assets/candidate2.jpg" width="100" height="100" alt="" class="img-polaroid" />
           <div class="roles">
-            <h5><strong><a href="http://0.0.0.0:5000">Joao Flask Datacenter</a></strong></h5>
+            <h5><strong><a href="https://apieleicoes.abcgov.com.br/vote/40">Joao Flask Datacenter</a></strong></h5>
           </div>
         </div>
       </div>

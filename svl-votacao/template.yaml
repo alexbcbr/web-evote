@@ -13,6 +13,14 @@ Globals:
         TRACE_LEVEL: INFO
 
 Resources:
+  TraceLevelParameterStore:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: 'tracelevel'
+      Description: 'Level of trace for Lambda Function'
+      Type: String
+      Value: 'INFO'
+
   SQSQueueLegacyVoting:
     Type: AWS::SQS::Queue
 
@@ -28,7 +36,7 @@ Resources:
       CodeUri: cast_vote/
       Handler: app.handler
       Events:
-        HelloWorld:
+        SubmeterGET:
           Type: Api
           Properties:
             Path: /vote/{num_candidato}
@@ -42,6 +50,9 @@ Resources:
         - SQSSendMessagePolicy:
             QueueName:
               'Fn::GetAtt': SQSQueueLegacyVoting.QueueName
+        - SSMParameterReadPolicy:
+            ParameterName:
+              Ref: TraceLevelParameterStore
       Environment:
         Variables:
           SQS_QUEUE_URL: !Ref SQSQueueLegacyVoting
@@ -69,6 +80,10 @@ Resources:
             ProjectionType: ALL
 
 Outputs:
+  CastVoteLambda:
+    Description: "Lambda para votacao"
+    Value: !Ref VotarFunction
+
   CastVoteApi:
     Description: "API Gateway endpoint URL para votacao"
     Value: !Sub "https://${ApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/vote/"

@@ -8,10 +8,12 @@ from voto_registro import *
 
 patch_all()
 
-trace_level = os.environ['TRACE_LEVEL']
 sqs_queue_url = os.environ['SQS_QUEUE_URL']
+#trace_level = os.environ['TRACE_LEVEL']
 
 def handler(event, context):
+    trace_level = get_trace_level()
+    print("Trace Level" + trace_level)
 
     logging.getLogger().setLevel(trace_level)
 
